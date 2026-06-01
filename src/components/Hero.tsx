@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { useMotionValue, useTransform, animate } from "framer-motion";
 import { DownloadCVButton } from "./DownloadCVButton";
 
 const AnimatedCounter = ({
