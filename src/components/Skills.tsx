@@ -6,7 +6,7 @@ export const Skills = () => {
     },
     {
       title: "Systems (Backend / DB)",
-      skills: ["Java", "Node.js", "C#", "ASP.NET Core", "SQL Server", "MySQL", "MongoDB"],
+      skills: ["Java", "Node.js", "C#", "ASP.NET Core", "SQL Server", "MySQL"],
     },
     { title: "Native Desktop", skills: [".NET C# WinForms", "Java Swing"] },
   ];
