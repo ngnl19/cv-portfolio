@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
-import { motion, AnimatePresence, easeOut } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const DownloadCVButton = () => {
   const [downloadState, setDownloadState] = useState<
     "idle" | "downloading" | "success"
-  >("idle"); // Removed 'already-downloaded' state to prevent artificial soft-locks
+  >("idle");
   const [progress, setProgress] = useState(0);
 
   const hasTriggeredDownloadFile = useRef(false);
@@ -23,7 +23,6 @@ export const DownloadCVButton = () => {
 
           if (!hasTriggeredDownloadFile.current) {
             hasTriggeredDownloadFile.current = true;
-
             setDownloadState("success");
 
             const link = document.createElement("a");
@@ -40,125 +39,108 @@ export const DownloadCVButton = () => {
 
           return 100;
         }
-        return prev + 5;
+        return prev + 10;
       });
-    }, 80);
+    }, 60);
   };
 
-  const radius = 22;
+  const radius = 18;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
-  const iconVariants = {
-    hover: {
-      y: [0, 4, -4, 0],
-      transition: {
-        duration: 0.6,
-        ease: easeOut,
-        repeat: Infinity,
-        repeatDelay: 0.2,
-      },
-    },
-  };
-
   return (
-    <div className="w-full sm:w-auto h-14 flex items-center justify-center">
+    <div className="inline-flex items-center">
       <motion.button
         onClick={triggerDownload}
         disabled={downloadState !== "idle"}
-        whileHover={downloadState === "idle" ? "hover" : ""}
+        type="button"
+        aria-label="Download Mark Andrew Duza CV (PDF)"
         layout
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className={`relative h-12 flex items-center justify-center font-mono text-xs uppercase tracking-wider border focus:outline-none select-none transition-all
-          ${
-            downloadState === "idle"
-              ? "w-full sm:w-48 px-6 bg-transparent text-zinc-300 border-zinc-800 hover:border-zinc-500 hover:text-white rounded-full cursor-pointer"
-              : "w-12 bg-transparent border-zinc-800 rounded-full"
-          }
-        `}>
+        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        className={`relative h-12 px-6 flex items-center justify-center font-mono text-xs uppercase tracking-wider border rounded-full select-none cursor-pointer btn-affordance transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-[var(--color-focus)] ${
+          downloadState === "idle"
+            ? "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-rule)] hover:border-[var(--color-ink-muted)] hover:bg-[var(--color-paper-3)]"
+            : "bg-[var(--color-paper-2)] text-[var(--color-ink)] border-[var(--color-accent)] cursor-default"
+        }`}>
         <AnimatePresence mode="wait">
           {downloadState === "idle" && (
             <motion.div
-              key="idle-txt"
-              initial={{ opacity: 0, y: 4 }}
+              key="idle-state"
+              initial={{ opacity: 0, y: 3 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              className="flex items-center justify-center gap-2 overflow-hidden py-1">
-              <span>Download CV</span>
-              <motion.div variants={iconVariants}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="w-3.5 h-3.5 text-emerald-500 block">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-                  />
-                </svg>
-              </motion.div>
+              exit={{ opacity: 0, y: -3 }}
+              transition={{ duration: 0.15 }}
+              className="flex items-center gap-2">
+              <span>Download CV (.pdf)</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-3.5 h-3.5 text-[var(--color-accent)] shrink-0">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                />
+              </svg>
             </motion.div>
           )}
 
           {downloadState === "downloading" && (
             <motion.div
-              key="loading-svg"
+              key="downloading-state"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 flex items-center justify-center">
-              <svg className="w-full h-full -rotate-90" viewBox="0 0 50 50">
+              className="flex items-center gap-2">
+              <svg className="w-5 h-5 -rotate-90" viewBox="0 0 44 44">
                 <circle
-                  cx="25"
-                  cy="25"
+                  cx="22"
+                  cy="22"
                   r={radius}
-                  className="stroke-emerald-500"
-                  strokeWidth="2"
+                  className="stroke-[var(--color-rule)]"
+                  strokeWidth="3"
+                  fill="transparent"
+                />
+                <circle
+                  cx="22"
+                  cy="22"
+                  r={radius}
+                  className="stroke-[var(--color-accent)]"
+                  strokeWidth="3"
                   fill="transparent"
                   strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
                   strokeLinecap="round"
-                  style={{ transition: "stroke-dashoffset 80ms linear" }}
+                  style={{ transition: "stroke-dashoffset 60ms linear" }}
                 />
               </svg>
+              <span>Downloading…</span>
             </motion.div>
           )}
 
           {downloadState === "success" && (
             <motion.div
-              key="success-check"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="absolute inset-0 flex items-center justify-center bg-transparent rounded-full">
-              <svg className="absolute w-full h-full" viewBox="0 0 50 50">
-                <circle
-                  cx="25"
-                  cy="25"
-                  r={radius}
-                  className="stroke-emerald-500"
-                  strokeWidth="2"
-                  fill="transparent"
-                />
-              </svg>
+              key="success-state"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex items-center gap-2 text-emerald-500 font-medium">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth={3}
+                strokeWidth={2.5}
                 stroke="currentColor"
-                className="w-5 h-5 text-emerald-500 z-10">
-                <motion.path
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
+                className="w-4 h-4">
+                <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   d="M4.5 12.75l6 6 9-13.5"
                 />
               </svg>
+              <span>CV Downloaded</span>
             </motion.div>
           )}
         </AnimatePresence>

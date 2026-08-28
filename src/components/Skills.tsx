@@ -1,42 +1,100 @@
 export const Skills = () => {
-  const categories = [
+  const skillCategories = [
     {
-      title: "Interface (Frontend)",
-      skills: ["React.js", "Next.js", "Vue.js", "Astro.js", "Tailwind CSS"],
+      title: "Programming Languages",
+      role: "Core Computation",
+      skills: [
+        { name: "JavaScript", note: "ES6+, Async, DOM" },
+        { name: "C#", note: ".NET, WinForms, APIs" },
+        { name: "Java", note: "Swing, OOP, Core" },
+        { name: "Python", note: "Scripting, Logic" },
+      ],
     },
     {
-      title: "Systems (Backend / DB)",
-      skills: ["Java", "Node.js", "C#", "ASP.NET Core", "SQL Server", "MySQL"],
+      title: "Frontend Engineering",
+      role: "Interface & Experience",
+      skills: [
+        { name: "React.js", note: "Hooks, State, UI" },
+        { name: "Next.js", note: "App Router, SSR" },
+        { name: "Vue.js", note: "Reactivity, SPA" },
+        { name: "Astro", note: "Content, Islands" },
+        { name: "Tailwind CSS", note: "v3 & v4, Design Tokens" },
+        { name: "HTML5 / CSS3", note: "Semantic, Responsive" },
+        { name: "Bootstrap", note: "Component Layouts" },
+      ],
     },
-    { title: "Native Desktop", skills: [".NET C# WinForms", "Java Swing"] },
+    {
+      title: "Backend & Database",
+      role: "Systems & Data Stores",
+      skills: [
+        { name: "ASP.NET Core Web API", note: "REST, Services, Auth" },
+        { name: "Node.js", note: "Express, Runtime" },
+        { name: "SQL Server", note: "T-SQL, Relations, Queries" },
+        { name: "MySQL", note: "Schema Design, CRUD" },
+      ],
+    },
+    {
+      title: "Desktop & Workflow Tools",
+      role: "Native & Developer Tooling",
+      skills: [
+        { name: ".NET C# WinForms", note: "Desktop POS & Tools" },
+        { name: "Java Swing", note: "GUI Applications" },
+        { name: "Git & Version Control", note: "Workflow, Branching" },
+        { name: "Unix / Linux", note: "CLI, Shell Scripting" },
+        { name: "VS Code & Visual Studio", note: "Primary IDEs" },
+        { name: "Figma & Canva", note: "UI Prototyping" },
+      ],
+    },
   ];
 
   return (
     <section
       id="stack"
-      className="py-20 md:py-32 px-4 md:px-6 max-w-7xl mx-auto border-t border-border-charcoal">
-      <h2 className="font-display text-[10px] md:text-xs uppercase tracking-[0.2em] text-zinc-500 mb-12 md:mb-16">
-        // Technical Arsenal
-      </h2>
+      className="py-20 md:py-28 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto border-t border-[var(--color-rule)]">
+      {/* Section Head: Vertical Stack (Gate 54) */}
+      <div className="flex flex-col gap-2 mb-12 md:mb-16">
+        <span className="font-mono text-xs uppercase tracking-widest text-[var(--color-ink-muted)]">
+          // Technical Stack & Tools
+        </span>
+        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--color-ink)]">
+          Engineering capabilities & tooling.
+        </h2>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border-charcoal border-y border-border-charcoal">
-        {categories.map((cat, index) => (
+      {/* Categorized Skills Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        {skillCategories.map((category, idx) => (
           <div
-            key={index}
-            className="py-6 px-2 md:p-8 group hover:md:bg-white/1 transition-colors duration-300">
-            <h3 className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-4 md:mb-6">
-              {cat.title}
-            </h3>
-            <ul className="flex flex-col gap-2 md:gap-3">
-              {cat.skills.map((skill, sIdx) => (
-                <li
+            key={idx}
+            className="p-6 sm:p-8 bg-[var(--color-paper-2)] border border-[var(--color-rule)] rounded-2xl flex flex-col justify-between gap-6 transition-colors duration-200">
+            <div className="flex flex-col gap-1 border-b border-[var(--color-rule-subtle)] pb-4">
+              <div className="flex items-center justify-between">
+                <h3 className="font-display text-lg font-bold text-[var(--color-ink)]">
+                  {category.title}
+                </h3>
+                <span className="font-mono text-xs text-[var(--color-accent)] font-medium">
+                  {category.skills.length} Technologies
+                </span>
+              </div>
+              <span className="font-mono text-xs text-[var(--color-ink-muted)]">
+                {category.role}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {category.skills.map((skill, sIdx) => (
+                <div
                   key={sIdx}
-                  className="font-display text-base md:text-lg text-zinc-400 md:group-hover:text-white transition-colors duration-500 flex items-center gap-2">
-                  <span className="w-1 h-1 bg-zinc-700 rounded-full" />
-                  {skill}
-                </li>
+                  className="p-3 bg-[var(--color-paper)] border border-[var(--color-rule-subtle)] rounded-lg flex flex-col gap-0.5">
+                  <span className="font-display text-sm font-semibold text-[var(--color-ink)]">
+                    {skill.name}
+                  </span>
+                  <span className="font-mono text-[11px] text-[var(--color-ink-muted)]">
+                    {skill.note}
+                  </span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         ))}
       </div>

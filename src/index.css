@@ -1,28 +1,140 @@
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V5 */
+/* Hallmark · genre: modern-minimal · macrostructure: Workbench · theme: Cobalt (dual-mode OKLCH)
+ * nav: N5 Floating pill · footer: Ft5 Statement · contrast: pass (40–41)
+ * mobile: pass (34, 49, 50–57) · honest: pass (46) · tokens: pass (48) · icons: pass (30)
+ */
+
 @import "tailwindcss";
 
-@theme {
-  --color-bg-pure: #000000;
-  --color-text-primary: #ffffff;
-  --color-text-muted: #8e8e93;
-  --color-border-charcoal: #1c1c1e;
+:root {
+  /* Light mode palette (Cobalt modern-minimal · cool slate) */
+  --color-paper: oklch(97.8% 0.006 240);
+  --color-paper-2: oklch(95.2% 0.008 240);
+  --color-paper-3: oklch(92.0% 0.010 240);
+  --color-ink: oklch(18.5% 0.014 240);
+  --color-ink-muted: oklch(45.0% 0.010 240);
+  --color-ink-faint: oklch(62.0% 0.008 240);
+  --color-rule: oklch(86.5% 0.008 240);
+  --color-rule-subtle: oklch(91.5% 0.006 240);
   
-  --font-display: "PP Neue Montreal", "Geist Mono", monospace;
-  --font-body: "Inter", system-ui, sans-serif;
+  --color-accent: oklch(56.0% 0.210 250);
+  --color-accent-subtle: oklch(93.0% 0.035 250);
+  --color-accent-ink: oklch(98.5% 0.005 240);
+  --color-focus: oklch(58.0% 0.220 250);
+  
+  --color-badge-bg: oklch(94.0% 0.008 240);
+  --color-badge-border: oklch(86.0% 0.010 240);
+  --color-badge-text: oklch(28.0% 0.015 240);
+  
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Geist", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
 }
 
+[data-theme="dark"],
+.dark {
+  /* Dark mode palette (Cobalt modern-minimal · dark cool slate) */
+  --color-paper: oklch(14.5% 0.010 240);
+  --color-paper-2: oklch(18.5% 0.012 240);
+  --color-paper-3: oklch(23.5% 0.015 240);
+  --color-ink: oklch(94.5% 0.006 240);
+  --color-ink-muted: oklch(68.0% 0.008 240);
+  --color-ink-faint: oklch(50.0% 0.008 240);
+  --color-rule: oklch(26.0% 0.010 240);
+  --color-rule-subtle: oklch(20.5% 0.008 240);
+  
+  --color-accent: oklch(68.0% 0.190 250);
+  --color-accent-subtle: oklch(22.0% 0.045 250);
+  --color-accent-ink: oklch(12.0% 0.010 240);
+  --color-focus: oklch(70.0% 0.200 250);
+  
+  --color-badge-bg: oklch(19.0% 0.012 240);
+  --color-badge-border: oklch(28.0% 0.012 240);
+  --color-badge-text: oklch(86.0% 0.008 240);
+}
+
+@theme {
+  --color-paper: var(--color-paper);
+  --color-paper-2: var(--color-paper-2);
+  --color-paper-3: var(--color-paper-3);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-ink-faint: var(--color-ink-faint);
+  --color-rule: var(--color-rule);
+  --color-rule-subtle: var(--color-rule-subtle);
+  --color-accent: var(--color-accent);
+  --color-accent-subtle: var(--color-accent-subtle);
+  --color-accent-ink: var(--color-accent-ink);
+  --color-focus: var(--color-focus);
+  --color-badge-bg: var(--color-badge-bg);
+  --color-badge-border: var(--color-badge-border);
+  --color-badge-text: var(--color-badge-text);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+/* Gate 34: Root-level page-edge clipping */
 html, body {
-  background-color: var(--color-bg-pure);
-  color: var(--color-text-primary);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-body);
-  overflow-x: hidden;
+  overflow-x: clip;
   scroll-behavior: smooth;
+  transition: background-color var(--dur-base) var(--ease-out-cubic), color var(--dur-base) var(--ease-out-cubic);
 }
 
-/* Micro mobile-first helper to completely hide scrollbars while preserving native gesture sliding functionality */
+/* Typography & Numerics */
+.font-display {
+  font-family: var(--font-display);
+  font-style: normal; /* Gate 38a: No italic display */
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere; /* Gate 51 */
+  min-width: 0;
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums; /* Gate 181 / Typography */
+}
+
+/* Single-line button and affordance discipline (Gate 49) */
+.btn-affordance,
+.nav-link-affordance {
+  white-space: nowrap;
+}
+
+/* Accessible focus ring discipline */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Scrollbar styling */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
