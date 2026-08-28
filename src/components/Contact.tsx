@@ -4,7 +4,7 @@ export const Contact = () => {
   const currentYear = new Date().getFullYear();
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
-  const handleCopy = (email: string) => {
+  const handleCopyEmail = (email: string) => {
     navigator.clipboard.writeText(email);
     setCopiedEmail(email);
     setTimeout(() => {
@@ -57,7 +57,7 @@ export const Contact = () => {
                   kweyzipotato@gmail.com
                 </a>
                 <button
-                  onClick={() => handleCopy("kweyzipotato@gmail.com")}
+                  onClick={() => handleCopyEmail("kweyzipotato@gmail.com")}
                   type="button"
                   title="Copy email"
                   aria-label="Copy kweyzipotato@gmail.com"
@@ -75,7 +75,7 @@ export const Contact = () => {
                   krazypotato19@icloud.com
                 </a>
                 <button
-                  onClick={() => handleCopy("krazypotato19@icloud.com")}
+                  onClick={() => handleCopyEmail("krazypotato19@icloud.com")}
                   type="button"
                   title="Copy email"
                   aria-label="Copy krazypotato19@icloud.com"
